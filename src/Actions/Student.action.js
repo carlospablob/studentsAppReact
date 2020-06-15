@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2'
 import {
     ADD_STUDENT,
     ADD_STUDENT_FAIL,
@@ -9,37 +10,37 @@ import {
 
 export function createNewStudent(Student) {
     return (dispatch) => {
-        dispatch(addCharacter())
+        dispatch(addStudent())
         try{
-            dispatch(addCharacterSuccess(Student))
-            // Swal.fire(
-            //     'Correcto',
-            //     'El personaje se agrego correctamente',
-            //     'success'
-            // )
+            dispatch(addStudentSuccess(Student))
+            Swal.fire(
+                'Correcto',
+                'El Estudiante se agrego correctamente',
+                'success'
+            )
         }catch (e) {
-            dispatch(addCharacterFail(true))
-            // Swal.fire({
-            //         icon:"error",
-            //         title: "Hubo un error",
-            //         text: "Hubo un error, intenta de nuevo"
-            //     }
-            // )
+            dispatch(addStudentFail(true))
+            Swal.fire({
+                    icon:"error",
+                    title: "Hubo un error",
+                    text: "Hubo un error, intenta de nuevo"
+                }
+            )
         }
     }
 }
 
-const addCharacter = () => ({
+const addStudent = () => ({
     type: ADD_STUDENT,
     payload: true
 })
 
-const addCharacterSuccess = character => ({
+const addStudentSuccess = character => ({
     type: ADD_STUDENT_SUCCESS,
     payload: character
 })
 
-const addCharacterFail = (state) => ({
+const addStudentFail = (state) => ({
     type: ADD_STUDENT_FAIL,
     payload: state
 })
@@ -91,11 +92,11 @@ export function deleteStudent(id) {
 
         try {
             dispatch( deleteStudentSuccess() );
-            // Swal.fire(
-            //     'Eliminado',
-            //     'El personaje se eliminó correctamente',
-            //     'success'
-            // )
+            Swal.fire(
+                'Eliminado',
+                'El Estudiante se eliminó correctamente',
+                'success'
+            )
         } catch (error) {
             console.log(error);
             dispatch( deleteStudentFail(true) );

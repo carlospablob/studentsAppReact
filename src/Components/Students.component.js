@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import Swal from 'sweetalert2'
 import studentM from '../Assets/student.png';
 import studentF from '../Assets/studenF.png';
 
@@ -30,21 +31,20 @@ const Students = () => {
     }
 
     const deleteCharacterBtn = id => {
-        // Swal.fire({
-        //     title: '¿Estas seguro?',
-        //     text: "Un personaje que se elimina no se puede recuperar",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Si, eliminar!!',
-        //     cancelButtonText: 'Cancelar'
-        // }).then((result) => {
-        //     if (result.value) {
-        //         dispatch( deleteStudent(id) );
-        //     }
-        // });
-        dispatch(deleteStudent(id));
+        Swal.fire({
+            title: '¿Estas seguro?',
+            text: "De eliminar a este estudiante",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, eliminar!!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                dispatch( deleteStudent(id) );
+            }
+        });
     }
 
     return (

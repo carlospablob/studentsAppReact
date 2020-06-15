@@ -68,23 +68,23 @@ export default function (state = initialState, action) {
         case ADD_STUDENT:
             return  { ...state, loading: action.payload }
         case ADD_STUDENT_SUCCESS:
-            return {...state, loading: false, characters: [...state.characters, action.payload]}
+            return {...state, loading: false, students: [...state.students, action.payload]}
         case STUDENT_DELETE_FAIL:
         case ADD_STUDENT_FAIL:
             return {...state, loading: false, error: action.payload}
         case GET_STUDENTS_SUCCESS:
-            return  {...state, loading: false, error: false, characters: state.characters.length === 0 ?  action.payload : [...state.characters]}
+            return  {...state, loading: false, error: false, students: state.students.length === 0 ?  action.payload : [...state.students]}
         case GET_STUDENT:
-            return { ...state, characterEdit: action.payload}
+            return { ...state, studentEdit: action.payload}
         case UPDATE_STUDENT_SUCCESS:
-            return {...state, characterEdit: null, characters: state.characters.map(
-                    character =>
-                        character.id === action.payload.id ? character = action.payload : character
+            return {...state, studentEdit: null, students: state.students.map(
+                    student =>
+                        student.id === action.payload.id ? student = action.payload : student
                 )}
         case GET_STUDENT_DELETE:
-            return {...state, characterDelete: action.payload}
+            return {...state, studentDelete: action.payload}
         case STUDENT_DELETE_SUCCESS:
-            return {...state, characters: state.characters.filter(item => item.id !== state.characterDelete), characterDelete: null}
+            return {...state, students: state.students.filter(item => item.id !== state.studentDelete), studentDelete: null}
         default:
             return state
     }
