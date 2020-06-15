@@ -54,7 +54,7 @@ const Students = () => {
                                     <img className="card-img-top img-size"
                                          src={item.gender === 'F' ? studentF : studentM} alt={item.name}/>
                                     <div className="card-body">
-                                        <h5 className="card-title">{item.name + item.id}</h5>
+                                        <h5 className="card-title">{item.name}</h5>
                                         <table className="table-striped" style={{'width': '100%'}}>
                                             <thead/>
                                             <tbody>
