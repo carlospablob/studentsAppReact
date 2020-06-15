@@ -4,6 +4,7 @@ import {createNewStudent} from '../Actions/Student.action'
 import {useHistory} from 'react-router-dom';
 
 const NewStudent = () => {
+    const [id, setId] = useState(Math.random)
     const [name, setName] = useState('')
     const [firtsName, setFirtsName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -24,12 +25,13 @@ const NewStudent = () => {
             return 0;
         }
         addStudent({
+            id,
             name,
             firtsName,
             lastName,
             phone,
             gpa,
-            gender
+            gender,
         })
 
         history.push('/')
