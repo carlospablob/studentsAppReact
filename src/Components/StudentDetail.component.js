@@ -12,7 +12,7 @@ const StudentDetailsComponent = () => {
 
     const redirectEdit = student => {
         dispatch( getStudentEdit(student) );
-        history.push(`/editar-personaje/${student.id}`)
+        history.push(`/editar-estudiante/${student.id}`)
     }
 
     return (

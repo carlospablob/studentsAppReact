@@ -1,40 +1,38 @@
-import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {createNewStudent} from '../Actions/Student.action'
-import {useHistory} from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import { updateStudent} from "../Actions/Student.action";
+import { useHistory } from 'react-router-dom';
 
-const NewStudent = () => {
-    const [id, setId] = useState(Math.random)
-    const [name, setName] = useState('')
-    const [firtsName, setFirtsName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [gpa, setGPA] = useState('')
-    const [gender, setGender] = useState('')
-
+const EditStudent = () => {
     const dispatch = useDispatch()
     const history = useHistory();
-    const loading = useSelector(state => state.Students.loading)
-    const error = useSelector(state => state.Students.error);
+    const [student, setStudent] = useState({
+        name: '',
+        gender: '',
+        firtsName: '',
+        lastName: '',
+        phone: '',
+        gpa: ''
+    })
+    const studentEdit = useSelector(state => state.Students.studentEdit)
 
-    const addStudent = Student => dispatch(createNewStudent(Student))
+    useEffect(() => {
+        setStudent(studentEdit)
+    }, [studentEdit])
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (name.trim() === '' || firtsName.trim() === '' || lastName.trim() === '') {
-            return 0;
-        }
-        addStudent({
-            id,
-            name,
-            firtsName,
-            lastName,
-            phone,
-            gpa,
-            gender,
+    const {name, gender, firtsName, lastName, phone, gpa} = student;
+
+    const handleSubmitStudent = e => {
+        e.preventDefault()
+        history.push(`/`)
+        dispatch(updateStudent(student))
+    }
+
+    const onChangeForm = e => {
+        setStudent({
+            ...student,
+            [e.target.name]: e.target.value
         })
-
-        history.push('/')
     }
 
     return (
@@ -44,10 +42,10 @@ const NewStudent = () => {
                     <div className="card">
                         <div className="card-body">
                             <h2 className="text-center mb-4 font-weight-bold">
-                                Agregar Nuevo Estudiante
+                                Editar Estudiandte
                             </h2>
 
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmitStudent}>
                                 <div className="form-group">
                                     <label>Nombre</label>
                                     <input
@@ -56,7 +54,7 @@ const NewStudent = () => {
                                         placeholder="Nombre"
                                         name="name"
                                         value={name}
-                                        onChange={e => setName(e.target.value)}
+                                        onChange={onChangeForm}
                                     />
                                 </div>
 
@@ -68,7 +66,7 @@ const NewStudent = () => {
                                         placeholder="Apellido Materno"
                                         name="firtsName"
                                         value={firtsName}
-                                        onChange={e => setFirtsName(e.target.value)}
+                                        onChange={onChangeForm}
                                     />
                                 </div>
 
@@ -80,16 +78,16 @@ const NewStudent = () => {
                                         placeholder="Apellido Paterno"
                                         name="lastName"
                                         value={lastName}
-                                        onChange={e => setLastName(e.target.value)}
+                                        onChange={onChangeForm}
                                     />
                                 </div>
-
                                 <div className="form-group">
                                     <label>Genero</label>
                                     <select
+                                        name="gender"
                                         className="form-control"
                                         value={gender}
-                                        onChange={e => setGender(e.target.value)}>
+                                        onChange={onChangeForm}>
                                         <option value="M">Masculino</option>
                                         <option value="F">Femenino</option>
                                     </select>
@@ -103,9 +101,10 @@ const NewStudent = () => {
                                         placeholder="Telefono"
                                         name="phone"
                                         value={phone}
-                                        onChange={e => setPhone(e.target.value)}
+                                        onChange={onChangeForm}
                                     />
                                 </div>
+
 
                                 <div className="form-group">
                                     <label>GPA</label>
@@ -115,20 +114,12 @@ const NewStudent = () => {
                                         placeholder="GPA"
                                         name="gpa"
                                         value={gpa}
-                                        onChange={e => setGPA(e.target.value)}
+                                        onChange={onChangeForm}
                                     />
                                 </div>
 
-                                <div className="row">
-                                    <div className="col text-center">
-                                        <button type="submit"
-                                                className="btn btn-primary font-weight-bold text-uppercase ">Agregar
-                                        </button>
-                                    </div>
-                                </div>
+                                <button type="submit" className="btn btn-primary font-weight-bold text-uppercase d-block w-100" >Guardar Cambios</button>
                             </form>
-                            {loading ? <p>Cargando...</p> : null}
-                            {error ? <p className="alert alert-danger p2 mt-4 text-center">Hubo un error</p> : null}
                         </div>
                     </div>
                 </div>
@@ -137,4 +128,4 @@ const NewStudent = () => {
     );
 }
 
-export default NewStudent;
+export default EditStudent;

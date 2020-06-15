@@ -2,10 +2,14 @@ import Swal from 'sweetalert2'
 import {
     ADD_STUDENT,
     ADD_STUDENT_FAIL,
-    ADD_STUDENT_SUCCESS, GET_STUDENT, GET_STUDENT_DELETE,
-    GET_STUDENTS,
-    GET_STUDENTS_FAIL,
-    GET_STUDENTS_SUCCESS, STUDENT_DELETE_FAIL, STUDENT_DELETE_SUCCESS
+    ADD_STUDENT_SUCCESS,
+    GET_STUDENT,
+    GET_STUDENT_DELETE,
+    STUDENT_DELETE_FAIL,
+    STUDENT_DELETE_SUCCESS,
+    UPDATE_STUDENT_FAIL,
+    UPDATE_STUDENT_INIT,
+    UPDATE_STUDENT_SUCCESS
 } from "../Types/types";
 
 export function createNewStudent(Student) {
@@ -43,36 +47,6 @@ const addStudentSuccess = character => ({
 const addStudentFail = (state) => ({
     type: ADD_STUDENT_FAIL,
     payload: state
-})
-
-
-export function getStudentsList() {
-    return async (dispatch) => {
-        dispatch(getStudents())
-        try {
-            // const response = await clientAxios.get('/character/')
-            const response = {}
-            dispatch(getStudentsSuccess(response))
-        }catch (e) {
-            console.log(e)
-            dispatch(getStudentsFail())
-        }
-    }
-}
-
-const getStudents = () => ({
-    type: GET_STUDENTS,
-    payload: true
-})
-
-const getStudentsSuccess = (characters) => ({
-    type: GET_STUDENTS_SUCCESS,
-    payload: characters.data.results
-})
-
-const getStudentsFail = () => ({
-    type:GET_STUDENTS_FAIL,
-    payload: true
 })
 
 export function getStudentEdit(student) {
@@ -116,5 +90,37 @@ const deleteStudentSuccess = () => ({
 
 const deleteStudentFail = (state) => ({
     type: STUDENT_DELETE_FAIL,
+    payload: state
+})
+
+
+
+export function updateStudent(student) {
+    return (dispatch) => {
+        dispatch(updateStudentAction())
+        try{
+            dispatch(updateStudentSuccess(student))
+            Swal.fire(
+                'Correcto',
+                'El estudiante se modifico correctamente',
+                'success'
+            )
+        }catch (e) {
+            dispatch(updateStudentFail(true))
+        }
+    }
+}
+
+const updateStudentAction = () => ({
+    type: UPDATE_STUDENT_INIT,
+})
+
+const updateStudentSuccess = character => ({
+    type: UPDATE_STUDENT_SUCCESS,
+    payload: character
+})
+
+const updateStudentFail = state => ({
+    type: UPDATE_STUDENT_FAIL,
     payload: state
 })

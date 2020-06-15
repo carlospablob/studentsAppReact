@@ -6,23 +6,18 @@ import studentM from '../Assets/student.png';
 import studentF from '../Assets/studenF.png';
 
 
-import {getStudentsList, getStudentEdit, deleteStudent} from '../Actions/Student.action'
+import {getStudentEdit, deleteStudent} from '../Actions/Student.action'
 
 const Students = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-
-    useEffect(() => {
-        const loadCharacters = () => dispatch(getStudentsList());
-        loadCharacters()
-    }, [])
 
     const students = useSelector(state => state.Students.students)
     const error = useSelector(state => state.Students.error)
 
     const redirectEdit = character => {
         dispatch(getStudentEdit(character));
-        history.push(`/editar-personaje/${character.id}`)
+        history.push(`/editar-estudiante/${character.id}`)
     }
 
     const redirectDetails = student => {
@@ -54,12 +49,12 @@ const Students = () => {
                 <div className="container box-table">
                     <div className="row" style={{justifyContent: 'space-around'}}>
                         {students.map(item => (
-                            <div className="col-md-4 col-sm-6">
-                                <div className="card" key={item.id}>
+                            <div className="col-md-4 col-sm-6" key={item.id}>
+                                <div className="card">
                                     <img className="card-img-top img-size"
                                          src={item.gender === 'F' ? studentF : studentM} alt={item.name}/>
                                     <div className="card-body">
-                                        <h5 className="card-title">{item.name}</h5>
+                                        <h5 className="card-title">{item.name + item.id}</h5>
                                         <table className="table-striped" style={{'width': '100%'}}>
                                             <thead/>
                                             <tbody>
